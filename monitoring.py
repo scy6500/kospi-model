@@ -4,6 +4,7 @@ import FinanceDataReader as fdr
 import preprocessing
 import grid_search
 import train
+import commit
 
 
 while True:
@@ -17,8 +18,9 @@ while True:
         result = "{} 예측 : {} 실제 : {}".format(today, predict_low, actual_low)
         f.write(result)
         f.close()
-        if abs(actual_low - predict_low) > 450:
+        if abs(actual_low - predict_low) > 100:
             preprocessing.prepreocessing()
             grid_search.main()
             train.main()
+            commit.main()
 
