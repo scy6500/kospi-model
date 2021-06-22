@@ -1,10 +1,22 @@
 import requests
 from datetime import datetime
 import FinanceDataReader as fdr
+import smtplib
+from email.mime.text import MIMEText
 import preprocessing
 import grid_search
 import train
 import commit
+
+
+def send_email():
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+    s.starttls()
+    s.login('scy6500@kookmin.ac.kr', '')
+    msg = MIMEText('kospi pred model이 재학습 되었습니다.')
+    msg['Subject'] = 'kospi pred model 재학습 알림'
+    s.sendmail("scy6500@kookmin.ac.kr", "scy6500@kookmin.ac.kr", msg.as_string())
+    s.quit()
 
 
 while True:
@@ -22,5 +34,6 @@ while True:
             preprocessing.prepreocessing()
             grid_search.main()
             train.main()
+            send_email()
             commit.main()
 
